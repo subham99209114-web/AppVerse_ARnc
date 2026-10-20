@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AppVerse ARnc — Game & App Launcher</title>
+<meta name="theme-color" content="#211344">
+<style>
+:root{--bg:#160f2d;--panel:#21183d;--panel2:#2a2050;--purple:#8b5cf6;--lav:#b9a1ff;--text:#f7f3ff;--muted:#aaa1c8;--line:#ffffff16;--green:#c7ff35}
+*{box-sizing:border-box}body{margin:0;font:14px/1.4 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial;color:var(--text);background:radial-gradient(ellipse at 25% 0%,#43266e 0,transparent 42%),radial-gradient(ellipse at 90% 70%,#322060 0,transparent 40%),#120d25;min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit;border:0}.shell{width:min(1500px,96vw);min-height:calc(100vh - 36px);margin:18px auto;border:1px solid #ffffff18;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#24163fef,#1b1434f5);box-shadow:0 25px 80px #08051180;display:grid;grid-template-columns:62px minmax(0,1fr) 236px}
+.rail{background:#110c24d9;border-right:1px solid var(--line);display:flex;align-items:center;flex-direction:column;padding:17px 8px;gap:15px}.brand{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#b7ff39,#8d61ff);color:#1c1232;display:grid;place-items:center;font-weight:1000;font-size:19px;margin-bottom:30px}.rail button{background:transparent;color:#a69abc;width:38px;height:38px;border-radius:12px;font-size:18px}.rail button.active,.rail button:hover{background:#8b5cf630;color:#d7c7ff}.rail .bottom{margin-top:auto}
+.main{padding:22px 22px 26px;min-width:0}.top{display:flex;align-items:center;gap:18px;justify-content:space-between;margin-bottom:24px}.wordmark{display:flex;gap:12px;align-items:center}.wordmark h1{font-size:20px;margin:0;letter-spacing:-.5px}.wordmark small{color:var(--muted);display:block;font-size:11px}.tabs{display:flex;gap:17px;align-items:center}.tab{background:transparent;color:#a79bbc;padding:8px 2px;font-weight:700;border-bottom:2px solid transparent}.tab.active{color:white;border-color:#a77cff}.top-actions{display:flex;gap:8px;align-items:center}.pill{border:1px solid var(--line);border-radius:11px;background:#ffffff08;padding:9px 12px;color:#d6c9f4}.primary{background:linear-gradient(100deg,#9a67ff,#7650e9);padding:10px 15px;border-radius:11px;font-weight:800;box-shadow:0 6px 20px #8352f533}.hero{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.hero h2{font-size:24px;margin:0 0 4px;letter-spacing:-.8px}.hero p{margin:0;color:var(--muted);font-size:12px}.search{display:flex;align-items:center;gap:8px;background:#120d27a8;border:1px solid var(--line);padding:10px 13px;border-radius:12px;width:min(300px,40%)}.search input{background:transparent;border:0;outline:0;color:white;width:100%;min-width:0}.filters{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 23px}.filter{background:#ffffff08;color:#bcb1d4;border:1px solid #ffffff12;padding:7px 13px;border-radius:20px;font-size:11px}.filter.active,.filter:hover{background:#8b5cf6;color:white;border-color:#a98aff}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:0 0 13px}.section-head h3{font-size:13px;margin:0;letter-spacing:.2px}.section-head span{font-size:11px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px 13px}.tile{min-width:0;position:relative;padding:8px 8px 11px;border:1px solid transparent;border-radius:16px;background:linear-gradient(145deg,#ffffff0b,#ffffff03);transition:.18s;cursor:pointer}.tile:hover{transform:translateY(-3px);background:#ffffff0d;border-color:#bba2ff55;box-shadow:0 12px 28px #08041145}.tile-icon{height:112px;border-radius:12px;display:grid;place-items:center;overflow:hidden;position:relative;background:linear-gradient(145deg,var(--c1,#9060f5),var(--c2,#44237d));font-size:35px;font-weight:900;text-shadow:0 3px 15px #14072c66}.tile-icon img{display:block;width:100%;height:100%;min-width:0;min-height:0;object-fit:contain;object-position:center;padding:4px;box-sizing:border-box;margin:auto;flex-shrink:0}.tile-icon{isolation:isolate;min-height:140px;height:140px}.tile-name{position:relative;display:block;clear:both;margin-top:10px;line-height:1.45;max-width:100%}.tile-icon .emoji{font-size:42px;filter:drop-shadow(0 4px 9px #16072e55)}.type-badge{position:absolute;top:5px;left:5px;font-size:9px;background:#110b24c9;border:1px solid #ffffff2b;border-radius:6px;padding:3px 6px;color:#ded2ff}.tile-name{font-weight:750;font-size:12px;margin:10px 1px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tile-sub{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.empty{display:none;text-align:center;padding:40px 12px;color:var(--muted)}.empty b{display:block;color:white;margin-bottom:5px}.divider{height:1px;background:var(--line);margin:26px 0 21px}.right{border-left:1px solid var(--line);background:#120d25a8;padding:17px 14px;min-width:0}.profile{display:flex;align-items:center;gap:10px;padding:10px;background:#ffffff08;border:1px solid var(--line);border-radius:14px}.avatar{height:36px;width:36px;border-radius:12px;background:linear-gradient(135deg,#baff40,#895aff);color:#1c1232;display:grid;place-items:center;font-weight:900}.profile strong{font-size:11px;display:block}.profile small{font-size:10px;color:var(--muted)}.side-card{margin-top:15px;padding:14px;border-radius:16px;background:linear-gradient(145deg,#302151,#21183c);border:1px solid #ffffff0b}.side-title{font-size:12px;font-weight:800;display:flex;justify-content:space-between;gap:6px}.side-title a{font-size:10px;color:#c0a5ff}.progress{height:5px;background:#ffffff17;border-radius:9px;margin-top:13px;overflow:hidden}.progress span{display:block;width:68%;height:100%;background:linear-gradient(90deg,#8d5df6,#c4ff37);border-radius:9px}.quick{display:flex;gap:7px;margin-top:13px}.quick button{flex:1;background:#ffffff0c;border:1px solid var(--line);border-radius:9px;padding:9px 2px;font-size:16px}.balance{font-size:24px;font-weight:850;margin:13px 0 3px}.muted{color:var(--muted);font-size:10px}.side-action{width:100%;display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#ffffff07;font-size:11px}.side-action:hover{background:#8b5cf626}.hint{font-size:10px;color:#a99ec5;line-height:1.55;margin-top:14px}.modal-back{position:fixed;inset:0;background:#090611c9;backdrop-filter:blur(10px);z-index:10;display:none;align-items:center;justify-content:center;padding:18px}.modal{width:min(650px,100%);max-height:92vh;overflow:auto;border:1px solid #ffffff25;border-radius:20px;background:linear-gradient(145deg,#2b1e4d,#171027);padding:22px;box-shadow:0 30px 90px #0009}.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.modal h2{margin:0;font-size:20px}.close{width:34px;height:34px;border-radius:10px;background:#ffffff12;font-size:20px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}.field label{font-size:11px;color:#c9bde4;font-weight:700}.field input,.field textarea,.field select{width:100%;border:1px solid #ffffff20;background:#100b22;color:#fff;border-radius:10px;padding:11px;outline:none}.field textarea{min-height:130px;resize:vertical;font-family:ui-monospace,monospace;font-size:12px}.field input:focus,.field textarea:focus{border-color:#a17bff}.drop{border:1px dashed #9a7add66;background:#ffffff05;border-radius:13px;padding:13px;color:#c7badf;font-size:11px}.notice{padding:11px 13px;border-radius:11px;background:#c7ff3510;border:1px solid #c7ff3530;color:#d8fca1;font-size:11px;line-height:1.5;margin:10px 0 15px}.modal-buttons{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.secondary{background:#ffffff0d;border:1px solid var(--line);border-radius:10px;padding:10px 14px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#f0eaff;color:#24133e;padding:11px 17px;border-radius:12px;box-shadow:0 10px 30px #0007;z-index:20;display:none;font-weight:750;font-size:12px}.preview-modal{width:min(1100px,100%);height:min(85vh,800px);display:flex;flex-direction:column}.preview-frame{flex:1;width:100%;border:1px solid #ffffff22;border-radius:12px;background:#fff}.foot{font-size:10px;color:#82789e;text-align:center;margin-top:28px}
+@media(max-width:1100px){.shell{grid-template-columns:54px minmax(0,1fr)}.right{display:none}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.main{padding:18px}}
+@media(max-width:700px){.shell{width:100%;margin:0;border-radius:0;min-height:100vh;grid-template-columns:44px minmax(0,1fr)}.main{padding:14px 11px}.rail{padding:12px 3px}.rail button{width:34px;height:34px}.brand{width:32px;height:32px}.top{flex-wrap:wrap;margin-bottom:18px}.top-actions{margin-left:auto}.wordmark h1{font-size:17px}.tabs{gap:10px}.hero{align-items:flex-start;flex-direction:column}.hero h2{font-size:21px}.search{width:100%}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tile-icon{height:140px;min-height:140px}.form-grid{grid-template-columns:1fr}.filters{gap:5px}.filter{padding:7px 10px}.top-actions .pill{display:none}}
+
+.policy-buttons{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px}.policy-btn{font-weight:750}.policy-btn:hover{background:#8b5cf626;border-color:#a98aff}.info-pages{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}.info-page{min-width:0;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#ffffff0a,#ffffff03);padding:15px}.info-copy{font-size:12px;line-height:1.8;color:#d5cbe9}.info-copy h4{font-size:15px;color:#fff;margin:5px 0 10px}.info-copy p{margin:0 0 12px}.info-copy strong{color:#c7ff8c}.info-page .section-head{align-items:flex-start}.info-page .section-head span{white-space:nowrap}@media(max-width:850px){.info-pages{grid-template-columns:1fr}}\n</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="rail" aria-label="Main navigation">
+    <div class="brand">A</div>
+    <button class="active" title="Library" onclick="setCategory('All')">⌂</button>
+    <button title="Games" onclick="setCategory('Game')">🎮</button>
+    <button title="Web apps" onclick="setCategory('Website')">◉</button>
+    <button title="Android apps" onclick="setCategory('APK')">▣</button>
+    <button title="Add item" onclick="openAdd()">＋</button>
+    <button class="bottom" title="Help" onclick="showHelp()">ⓘ</button>
+  </nav>
+  <main class="main">
+    <header class="top">
+      <div class="wordmark"><div><h1>AppVerse <span style="color:#b79aff">ARnc</span></h1><small>YOUR PERSONAL APP & GAME HUB</small></div></div>
+      <div class="tabs"><button class="tab active" id="gamesTab" onclick="setCategory('All')">Games</button><button class="tab" id="appsTab" onclick="setCategory('Apps')">Apps</button></div>
+      <div class="top-actions"><span class="pill">LOCAL LIBRARY</span><button class="primary" onclick="openAdd()">＋ Add item</button></div>
+    </header>
+    
+    <div class="section-head"><h3>⚡ QUICK ACTIONS</h3><span>Everything stays on this device</span></div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:10px">
+      <button class="tile" onclick="openAdd('Website')"><div class="tile-icon" style="height:70px;--c1:#6551d9;--c2:#b36dff">↗</div><div class="tile-name">Add website URL</div><div class="tile-sub">Open a web app</div></button>
+      <button class="tile" onclick="openAdd('HTML')"><div class="tile-icon" style="height:70px;--c1:#167fbd;--c2:#43d6c4">&lt;/&gt;</div><div class="tile-name">Add HTML app</div><div class="tile-sub">Code or .html file</div></button>
+      <button class="tile" onclick="openAdd('APK')"><div class="tile-icon" style="height:70px;--c1:#4a9b67;--c2:#b6f65b">▣</div><div class="tile-name">Add Android APK</div><div class="tile-sub">Keep installer handy</div></button>
+      <button class="tile" onclick="exportLibrary()"><div class="tile-icon" style="height:70px;--c1:#b45bd5;--c2:#5d55da">⇩</div><div class="tile-name">Export library</div><div class="tile-sub">Save item list as JSON</div></button>
+    </div>
+    <div class="hero"><div><h2>Your digital playground</h2><p>All your favorite games, apps and websites in one place.</p></div><div class="search">⌕ <input id="search" placeholder="Search your library…" oninput="render()"></div></div>
+    <div class="filters" id="filters"><button class="filter active" onclick="setCategory('All')">All items</button><button class="filter" onclick="setCategory('Game')">Games</button><button class="filter" onclick="setCategory('Website')">Websites</button><button class="filter" onclick="setCategory('HTML')">HTML apps</button><button class="filter" onclick="setCategory('APK')">Android APK</button></div>
+    <div class="section-head"><h3 id="sectionTitle">✦ YOUR LIBRARY</h3><span id="count">0 items</span></div>
+    <div class="grid" id="grid"></div><div class="empty" id="empty"><b>No items found</b>Add a URL, HTML code, HTML file or APK to start your library.</div>
+    <div class="divider"></div>
+    <section class="info-pages" aria-label="About and privacy information">
+      <div class="info-page" id="aboutPage" style="display:none">
+        <div class="section-head"><h3>ℹ️ ABOUT APPVERSE ARnc</h3><span>About this website</span></div>
+        <div class="info-copy">
+          <h4>Welcome to AppVerse ARnc</h4>
+          <p>AppVerse ARnc is a personal, local-first launcher designed to help you keep useful websites, web applications, HTML projects, games, and Android APK installer files together in one convenient library. Instead of searching through bookmarks, downloads, and scattered files every time you want to open something, you can create a single collection that is easy to browse and search.</p>
+          <p>The website provides a simple way to add a shortcut for a website, save an HTML application by pasting its code or choosing an HTML file, and keep an Android APK installer available for download. You can give an item a display name and optionally choose an image for its icon. The library grid shows each item as a tile, making your collection easier to recognize at a glance.</p>
+          <p><strong>Website shortcuts:</strong> Add a full website address beginning with https:// or http://. When you open that tile, AppVerse ARnc attempts to open the address in a new browser tab. It may try to display the website’s favicon automatically, although some websites do not expose an icon or restrict access to it. A custom icon can be used when you want a more recognizable tile.</p>
+          <p><strong>HTML applications:</strong> You can paste complete HTML code or select an .html or .htm file. The app opens HTML content in its built-in preview frame, which uses browser sandbox restrictions. These restrictions help limit what previewed content can do. Some projects depend on separate images, scripts, fonts, files, server routes, or permissions that are not included in the HTML itself; such projects may need those resources embedded or otherwise made available before they work correctly in a preview.</p>
+          <p><strong>Android APK files:</strong> AppVerse ARnc can keep an APK installer in its local library and offer it for download. A normal browser cannot run or install an Android APK directly on a computer. To use the installer, download it and transfer or open it on a compatible Android device, then follow Android’s installation prompts and security settings. Only install APK files from sources you trust.</p>
+          <p><strong>Search and categories:</strong> Use the search field to find saved items by their name, type, or website address. Category filters help narrow the library to relevant items. Quick Actions at the top of the page provide direct access to common tasks, including adding a website, adding an HTML app, adding an APK, and exporting a library list.</p>
+          <p><strong>Renaming and deleting:</strong> Library tiles open the saved item when clicked. This version does not include a per-item options menu for renaming or deleting entries. Consider exporting a backup list before making major changes. The export is a JSON description of the saved item list; it does not include the contents of locally stored files, so it should not be treated as a complete backup of HTML or APK file data.</p>
+          <p><strong>How storage works:</strong> The site uses browser storage, including IndexedDB when available, to save library entries on the current browser and device. This approach avoids requiring an AppVerse account or a remote application database for ordinary library use. Browser storage availability and limits vary by browser and device. Private browsing modes, storage restrictions, browser cleanup tools, or clearing site data may prevent information from persisting or may remove saved entries.</p>
+          <p><strong>What to expect:</strong> AppVerse ARnc is a launcher and organizer, not an app store, APK installer, hosting service, antivirus scanner, or guarantee that every external website or HTML project will work. External websites can change or become unavailable. The website cannot guarantee the safety, legality, compatibility, or performance of files and links you choose to add. You remain responsible for the content you save and open.</p>
+          <p>We recommend using descriptive names, choosing trusted sources, and keeping separate backups of important original files. Test HTML projects in a safe environment and verify that external links are correct before opening them. If browser storage is unavailable or full, the library may not save changes reliably; free space or use a supported browser and check that site data is permitted.</p>
+          <p>Our goal is to keep the interface straightforward: add the things you use, find them quickly, and open them from one place. The existing library, filters, item tiles, add-item dialog, HTML preview, APK download, rename/delete menu, and JSON export remain the primary tools of the website.</p>
+        </div>
+      </div>
+      <div class="info-page" id="privacyPage" style="display:none">
+        <div class="section-head"><h3>🔒 PRIVACY POLICY</h3><span>Privacy and data handling</span></div>
+        <div class="info-copy">
+          <h4>Your privacy matters</h4>
+          <p>This Privacy Policy explains how AppVerse ARnc handles information when you use this website. The current version is designed as a local-first launcher: library information is saved in browser storage on the device and browser you are using. No account is required for the core library features, and the supplied website code does not intentionally send your library database to an AppVerse remote server.</p>
+          <p><strong>Information you choose to enter:</strong> When you add an item, you may provide a display name, website URL, HTML code, an HTML file, an APK file, and an optional custom icon. These details are used to create the library entry and support the functions you request. They may remain in the browser’s local storage so the entry can be displayed after you revisit the page.</p>
+          <p><strong>Local browser storage:</strong> The app uses IndexedDB where available to store library records and file data. This data is associated with the browser’s site storage on your device. People who can access your browser profile or device may be able to access that stored data. Local storage is not the same as encrypted cloud storage, and the site does not promise that locally saved information is encrypted or protected from other users of the same device.</p>
+          <p><strong>Website links and external services:</strong> When you open a website shortcut, your browser connects to the destination website. That website may receive standard connection information such as your IP address, browser details, and any information you submit there, according to its own policies. AppVerse ARnc does not control third-party websites and is not responsible for their privacy practices. Review their policies before sharing personal information.</p>
+          <p><strong>Icons and remote requests:</strong> For a website shortcut, the page may attempt to load a favicon from the website’s domain. This can cause a request to that domain, which may receive ordinary network information. If you upload a custom icon, it is used for the library tile in the browser. The supplied code does not intentionally upload that custom icon to an AppVerse server.</p>
+          <p><strong>HTML preview:</strong> HTML content that you add is displayed in a sandboxed iframe with scripts, forms, and modals permitted. Sandbox settings are a protective browser feature, but they are not a guarantee that all content is risk-free. A project may itself request remote resources or navigate to external services. Only preview code and files from sources you trust, and inspect the content if you are unsure what it does.</p>
+          <p><strong>APK files:</strong> APK installers you add are stored locally when browser storage permits. The app provides a download action; it does not scan APKs for malware. If you download or install an APK, the destination browser, operating system, security software, or app may process it under its own rules. Do not install files from unknown or suspicious sources.</p>
+          <p><strong>Exporting:</strong> The Export library action downloads a JSON file containing the library’s item descriptions. For privacy and size reasons, the export excludes the actual locally stored file contents. The exported JSON may still include names, URLs, and other item details, so treat it as personal data: save it in a safe place and do not share it publicly unless you intend to disclose its contents.</p>
+          <p><strong>Data sharing and sale:</strong> Based on the supplied website code, the app does not include an AppVerse account system, advertising tracker, analytics integration, or application backend that deliberately sends the library contents to a central service. This statement describes the code provided for this version and cannot cover changes made by a host, browser extensions, network provider, or external websites you open. No claim is made about third-party infrastructure outside the site’s control.</p>
+          <p><strong>Retention and deletion:</strong> Your library data generally remains in browser storage until you delete individual entries, clear the site’s browser data, or the browser removes storage under its own policies. This version does not include a per-item delete menu. Clearing browser storage may remove many or all entries at once and may not be reversible. Exporting the item list before clearing storage can preserve a limited record, but does not back up file contents.</p>
+          <p><strong>Children and sensitive information:</strong> AppVerse ARnc is a general-purpose launcher, not a service designed to collect sensitive personal information. Avoid storing passwords, payment details, identity documents, private health information, or other highly sensitive data in item names, URLs, HTML content, or files. If children use the same device, use appropriate device-level accounts and access controls.</p>
+          <p><strong>Security:</strong> Keep your browser and operating system updated, use a device passcode, and avoid shared or public devices for private libraries. Local-first storage reduces the need to transmit library data to a central server, but it does not remove risks from malware, compromised devices, malicious HTML, unsafe downloads, or people with access to your browser profile. You are responsible for deciding which links and files to save and open.</p>
+          <p><strong>Your choices:</strong> You can choose what to add, use custom names, delete entries, export a list, or stop using the website. You can also use your browser’s site-data settings to clear stored information. Before deleting site data, remember that this can remove your library. If you host or modify this website, review any additional scripts, hosting features, analytics, advertising, or third-party services you add, and update this policy to accurately describe them.</p>
+          <p><strong>Policy changes and contact:</strong> This policy may need to change if the website’s features, hosting, or data practices change. The website code supplied here does not provide a verified privacy contact address, so none is listed. If you publish this website for other people, add an appropriate contact method and confirm that the policy matches your actual hosting and applicable legal requirements before relying on it as a formal legal document.</p>
+          <p>By using AppVerse ARnc, you understand that the library is intended to operate locally in your browser and that opening external links or using content you add may involve other services. This policy is a practical description of the supplied code, not legal advice or a guarantee of absolute security.</p>
+        </div>
+      </div>
+    </section>
+    <div class="foot">AppVerse ARnc · Local-first launcher · Your files stay in this browser</div>
+  </main>
+  <aside class="right">
+    <div class="profile"><div class="avatar">A</div><div><strong>AppVerse Client</strong><small>Personal library</small></div><span style="margin-left:auto;color:#c2afff">⌄</span></div>
+    <div class="side-card"><div class="side-title">Library overview <a>LOCAL</a></div><div class="balance" id="sideCount">0 <span style="font-size:12px;color:#a99ec5">items</span></div><div class="muted">Your apps, games and websites</div><div class="progress"><span id="progressBar"></span></div><div class="quick"><button onclick="setCategory('Game')" title="Games">🎮</button><button onclick="setCategory('Website')" title="Websites">🌐</button><button onclick="setCategory('APK')" title="APK files">📦</button></div></div>
+    <div class="side-card"><div class="side-title">Add something new <span>✦</span></div><p class="muted" style="line-height:1.7">Add a website, paste HTML code, upload an HTML file or keep an APK installer in your library.</p><button class="primary" style="width:100%" onclick="openAdd()">＋ Add to library</button></div>
+    <button class="side-action" onclick="exportLibrary()">Export library <span>⇩</span></button>
+    <button class="side-action" onclick="showHelp()">How it works <span>↗</span></button>
+    <div class="hint">🔒 No account required. Library metadata is saved in this browser. Uploaded files are stored locally when browser storage allows it.</div>
+  </aside>
+</div>
+
+<div class="modal-back" id="addBack" role="dialog" aria-modal="true">
+ <div class="modal">
+  <div class="modal-head"><h2>Add to your library</h2><button class="close" onclick="closeAdd()">×</button></div>
+  <div class="filters" id="kindChoices"><button class="filter active" data-kind="Website" onclick="chooseKind('Website')">Website URL</button><button class="filter" data-kind="HTML" onclick="chooseKind('HTML')">HTML code / file</button><button class="filter" data-kind="APK" onclick="chooseKind('APK')">Android APK</button></div>
+  <div class="field"><label>Display name</label><input id="itemName" placeholder="e.g. My Favorite Game"></div>
+  <div class="field" id="urlField"><label>Website URL</label><input id="itemUrl" placeholder="https://example.com"></div>
+  <div class="field" id="codeField" style="display:none"><label>Paste complete HTML code</label><textarea id="itemCode" placeholder="<!doctype html> ..."></textarea></div>
+  <div class="field" id="fileField" style="display:none"><label id="fileLabel">Upload file</label><input id="itemFile" type="file" class="drop" accept=".html,.htm,text/html"></div>
+  <div class="field"><label>Choose a custom icon (optional)</label><input id="itemIcon" type="file" accept="image/*" class="drop"><span class="muted">For best results, use a square PNG/JPG. Website favicons are detected automatically when possible.</span></div>
+  <div class="notice" id="typeNotice">Website tiles open the supplied URL. Icons are loaded from the website's favicon when the browser permits it.</div>
+  <div class="modal-buttons"><button class="secondary" onclick="closeAdd()">Cancel</button><button class="primary" onclick="saveItem()">Add to library</button></div>
+ </div>
+</div>
+<div class="modal-back" id="previewBack" role="dialog" aria-modal="true">
+ <div class="modal preview-modal"><div class="modal-head"><div><h2 id="previewTitle">App preview</h2><div class="muted">HTML runs inside a sandboxed preview frame.</div></div><button class="close" onclick="closePreview()">×</button></div><iframe id="previewFrame" class="preview-frame" sandbox="allow-scripts allow-forms allow-modals"></iframe></div>
+</div>
+  <div class="policy-buttons" aria-label="Website information">
+      <button class="pill policy-btn" onclick="showInfoPage('aboutPage')">ℹ️ About Website</button>
+      <button class="pill policy-btn" onclick="showInfoPage('privacyPage')">🔒 Privacy Policy</button>
+    </div>
+<div class="toast" id="toast"></div>
+<input type="file" id="importInput" accept=".json,application/json" hidden>
+<script>
+const DB_NAME='appverse_arnc_db', STORE='items'; let db=null, items=[], currentKind='Website', currentCategory='All', activePreview=null;
+const demo=[];
+function openDB(){return new Promise((resolve,reject)=>{if(!('indexedDB'in window)){resolve(null);return}let req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{let d=req.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+function dbAll(){return new Promise(resolve=>{if(!db){resolve([]);return}let r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>resolve(r.result||[]);r.onerror=()=>resolve([])})}
+function dbPut(x){return new Promise((resolve,reject)=>{if(!db){resolve(false);return}let r=db.transaction(STORE,'readwrite').objectStore(STORE).put(x);r.onsuccess=()=>resolve(true);r.onerror=()=>reject(r.error)})}
+function dbDelete(id){return new Promise(resolve=>{if(!db){resolve();return}let r=db.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=resolve;r.onerror=resolve})}
+function safeId(){return 'i'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(s){let t=document.getElementById('toast');t.textContent=s;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2800)}
+function allItems(){return [...demo,...items]}
+function render(){
+ const q=document.getElementById('search').value.toLowerCase().trim();
+ let list=allItems().filter(x=>(currentCategory==='All'||currentCategory==='Apps'?!q||((x.name+' '+x.kind+' '+(x.url||'')).toLowerCase().includes(q)):x.kind===currentCategory));
+ if(currentCategory==='Apps')list=list.filter(x=>x.kind!=='Game');
+ if(q)list=list.filter(x=>(x.name+' '+x.kind+' '+(x.url||'')).toLowerCase().includes(q));
+ document.getElementById('grid').innerHTML=list.map(x=>tileHTML(x)).join('');
+ document.getElementById('empty').style.display=list.length?'none':'block';
+ document.getElementById('count').textContent=list.length+' items';
+ document.getElementById('sideCount').innerHTML=allItems().length+' <span style="font-size:12px;color:#a99ec5">items</span>';
+ document.getElementById('progressBar').style.width=Math.min(100,allItems().length*5)+'%';
+ document.getElementById('sectionTitle').textContent=currentCategory==='All'?'✦ YOUR LIBRARY':'✦ '+currentCategory.toUpperCase()+' LIBRARY';
+ document.querySelectorAll('#filters .filter').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(currentCategory.toLowerCase())||(currentCategory==='All'&&b.textContent==='All items')));
+ document.getElementById('gamesTab').classList.toggle('active',currentCategory!=='Apps');
+ document.getElementById('appsTab').classList.toggle('active',currentCategory==='Apps');
+}
+function tileHTML(x){
+ const kind=x.kind||'Website', emoji=x.emoji||({Website:'🌐',HTML:'</>',APK:'▣',Game:'🎮'}[kind]||'✦');
+ let icon=x.iconData?`<img src="${x.iconData}" alt="">`:`<span class="emoji">${emoji}</span>`;
+ if(!x.iconData&&x.url){let u;try{u=new URL(x.url);icon=`<img src="${esc(u.origin+'/favicon.ico')}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" alt=""><span class="emoji" style="display:none">${emoji}</span>`}catch(e){}}
+ return `<article class="tile" onclick="launchItem('${x.id||''}',${x.demo?'true':'false'})" style="--c1:${x.c1||'#8b5cf6'};--c2:${x.c2||'#42236f'}"><div class="tile-icon"><span class="type-badge">${esc(kind)}</span>${icon}</div><div class="tile-name">${esc(x.name)}</div><div class="tile-sub">${esc(x.sub||x.url||kind)}</div></article>`;
+}
+function setCategory(c){currentCategory=c;render()}
+function chooseKind(k){
+ currentKind=k;
+ document.querySelectorAll('#kindChoices .filter').forEach(b=>b.classList.toggle('active',b.dataset.kind===k));
+ document.getElementById('urlField').style.display=k==='Website'?'block':'none';
+ document.getElementById('codeField').style.display=k==='HTML'?'block':'none';
+ document.getElementById('fileField').style.display=k==='APK'||k==='HTML'?'block':'none';
+ document.getElementById('fileLabel').textContent=k==='APK'?'Upload Android APK (.apk)':'Upload HTML file (.html)';
+ document.getElementById('itemFile').accept=k==='APK'?'.apk,application/vnd.android.package-archive':'.html,.htm,text/html';
+ document.getElementById('typeNotice').textContent=k==='APK'?'Browsers cannot execute Android APK files. This stores the installer and lets you download it; use Android to install it. Add a custom icon to show the app’s real icon.':k==='HTML'?'HTML files and pasted HTML can run in the built-in preview. Local file references may need to be uploaded or embedded into the HTML.':'Website tiles open the supplied URL. The site favicon is attempted automatically; some sites block or do not expose it.';
+}
+function openAdd(kind){document.getElementById('addBack').style.display='flex';chooseKind(kind||'Website')}
+function closeAdd(){document.getElementById('addBack').style.display='none'}
+async function readFile(file){return new Promise((res,rej)=>{let r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})}
+function iconFromHtml(code){try{let doc=new DOMParser().parseFromString(code,'text/html');let l=doc.querySelector('link[rel~="icon"],link[rel="shortcut icon"],meta[property="og:image"]');if(!l)return '';let src=l.getAttribute('href')||l.getAttribute('content');if(!src)return '';if(src.startsWith('data:image/'))return src;return ''}catch(e){return ''}}
+async function saveItem(){
+ const name=document.getElementById('itemName').value.trim()||({Website:'Website shortcut',HTML:'HTML app',APK:'Android app'}[currentKind]);
+ const urlRaw=document.getElementById('itemUrl').value.trim(), code=document.getElementById('itemCode').value;
+ const file=document.getElementById('itemFile').files[0], iconFile=document.getElementById('itemIcon').files[0];
+ let x={id:safeId(),name,kind:currentKind,sub:currentKind==='Website'?'Website shortcut':currentKind==='HTML'?'HTML app':'Android installer',created:Date.now(),c1:['#8055ee','#b15be6','#358eb9','#d16a8c'][Math.floor(Math.random()*4)],c2:'#30205c'};
+ try{
+  if(currentKind==='Website'){
+   let u;try{u=new URL(urlRaw)}catch(e){toast('Enter a valid website URL, including https://');return}
+   if(!['http:','https:'].includes(u.protocol)){toast('Only http:// and https:// URLs are supported.');return}
+   x.url=u.href;x.sub=u.hostname;
+  }else if(currentKind==='HTML'){
+   if(file){if(!/\.html?$/i.test(file.name)){toast('Choose an .html or .htm file.');return}x.fileData=await readFile(file);x.fileName=file.name;x.code=await file.text();x.sub=file.name}
+   else if(code.trim()){x.code=code;x.sub='Custom HTML app'}
+   else{toast('Paste HTML code or choose an HTML file.');return}
+   x.iconData=iconFromHtml(x.code)||'';
+  }else{
+   if(!file||!file.name.toLowerCase().endsWith('.apk')){toast('Choose an Android .apk file.');return}
+   x.fileData=await readFile(file);x.fileName=file.name;x.fileSize=file.size;x.sub=(file.size/1048576).toFixed(1)+' MB APK';
+  }
+  if(iconFile){if(!iconFile.type.startsWith('image/')){toast('Choose an image for the icon.');return}x.iconData=await readFile(iconFile)}
+  await dbPut(x);items.push(x);render();closeAdd();resetForm();toast('Added to your library');
+ }catch(e){console.error(e);toast('Could not save this item. Browser storage may be full.')}
+}
+function resetForm(){['itemName','itemUrl','itemCode'].forEach(id=>document.getElementById(id).value='');document.getElementById('itemFile').value='';document.getElementById('itemIcon').value=''}
+function launchItem(id,isDemo){
+ if(isDemo){toast('Demo tile only — add your own URL, HTML app or APK to launch it.');return}
+ const x=items.find(a=>a.id===id);if(!x)return;
+ if(x.kind==='Website'){window.open(x.url,'_blank','noopener,noreferrer');return}
+ if(x.kind==='HTML'){openPreview(x);return}
+ if(x.kind==='APK'){
+  if(!x.fileData){toast('APK file is not available in local browser storage.');return}
+  const a=document.createElement('a');a.href=x.fileData;a.download=x.fileName||'app.apk';document.body.appendChild(a);a.click();a.remove();toast('APK download started — install it on Android.');return;
+ }
+}
+function openPreview(x){
+ activePreview=x;document.getElementById('previewTitle').textContent=x.name;
+ const frame=document.getElementById('previewFrame');
+ if(x.fileData){frame.src=x.fileData}else{frame.srcdoc=x.code||'<h2>No HTML content</h2>'}
+ document.getElementById('previewBack').style.display='flex';
+}
+function closePreview(){document.getElementById('previewBack').style.display='none';document.getElementById('previewFrame').src='about:blank';activePreview=null}
+function exportLibrary(){const blob=new Blob([JSON.stringify({app:'AppVerse ARnc',version:1,items:items.map(({fileData,...x})=>({...x,hasLocalFile:!!fileData}))},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='appverse-library.json';a.click();URL.revokeObjectURL(a.href);toast('Library list exported (file contents are not included).')}
+function showHelp(){alert('AppVerse ARnc — local-first launcher\\n\\n• Website URL: opens in a new browser tab. Favicon detection is best-effort.\\n• HTML code/file: opens in a sandboxed preview.\\n• APK: stores the installer and downloads it when clicked; install it on an Android device. A browser cannot run an APK directly.\\n• Custom icon: upload a square image to use the real icon. APK icons cannot reliably be extracted from binary Android manifests without an APK parser.\\n• No backend or external API is used. Items are stored in this browser; clearing browser data may remove them.');}
+function showInfoPage(id){
+ const pages=['aboutPage','privacyPage'];
+ const target=document.getElementById(id);
+ if(!target)return;
+ const shouldOpen=target.style.display==='none';
+ pages.forEach(pid=>{const el=document.getElementById(pid);if(el)el.style.display='none'});
+ if(shouldOpen){target.style.display='block';target.scrollIntoView({behavior:'smooth',block:'start'});}
+}
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAdd();closePreview()}});
+(async()=>{try{db=await openDB();items=await dbAll()}catch(e){db=null;items=[];toast('Browser storage unavailable — items may not persist after refresh.')}render()})();
+</script>
+</body>
+</html>
